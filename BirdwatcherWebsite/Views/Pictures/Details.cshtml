@@ -2,9 +2,14 @@
 
 @{
     ViewData["Title"] = "Details";
+    string imagePath = "/Photos/" + Model.ImagePath;
 }
 
 <h1>Details</h1>
+
+<div>
+    <img src="@imagePath" class="img-fluid thumbnail" width="320px">
+</div>
 
 <div>
     <h4>Picture</h4>

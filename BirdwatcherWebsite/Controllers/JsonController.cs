@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BirdwatcherWebsite.Data;
+using BirdwatcherWebsite.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Elfie.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -7,10 +10,16 @@ namespace BirdwatcherWebsite.Controllers
 {
     public class JsonController : Controller
     {
-        [HttpPost]
-        public IActionResult PostJson([FromBody] JObject jsonInput)
+        private readonly BirdwatcherWebsiteContext _context;
+
+        public JsonController(BirdwatcherWebsiteContext context)
         {
-            string file;
+            _context = context;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> PostJson([FromBody] JObject jsonInput)
+        {
             try
             {
                 // Log the received JSON data to the console
@@ -21,15 +30,30 @@ namespace BirdwatcherWebsite.Controllers
                 // Extract image data from JSON object
                 string base64Image = jsonInput["image"].ToString();
                 byte[] imageBytes = Convert.FromBase64String(base64Image);
-                file = StoreImage(imageBytes);
+
+                // Store image file and get the file path
+                string filePath = StoreImage(imageBytes);
+
+                // Create a new Picture entity
+                var picture = new Picture
+                {
+                    ImagePath = filePath,
+                    Title = "Optional Title", // Add a way to include title if your JSON includes it
+                    DateTimeImgTaken = DateTime.Now, // Consider extracting from JSON if available
+                    BirdType = "Optional Bird Type" // Add a way to include bird type if your JSON includes it
+                };
+
+                // Save the Picture entity to the database
+                _context.Add(picture);
+                await _context.SaveChangesAsync();
+
+                return Ok("Image processed and stored successfully, name is " + filePath);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error processing image: " + ex.Message);
                 return BadRequest("Error processing image");
             }
-
-            return Ok("Image processed and stored successfully name is " + file);
         }
 
         private string StoreImage(byte[] imageBytes)
@@ -48,7 +72,7 @@ namespace BirdwatcherWebsite.Controllers
             System.IO.File.WriteAllBytes(filePath, imageBytes);
             Console.WriteLine($"Image saved to {filePath}");
 
-            return filePath;
+            return fileName;
         }
 
         private string GenerateUniqueFileName(string fileExtension)

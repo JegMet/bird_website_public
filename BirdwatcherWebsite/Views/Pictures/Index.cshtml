@@ -13,6 +13,9 @@
     <thead>
         <tr>
             <th>
+                Image
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -29,7 +32,11 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+            string imagePath = "/Photos/" + item.ImagePath;
+            <tr>
+            <td>
+                <img src="@imagePath" class="img-fluid thumbnail" width="50px">
+             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
