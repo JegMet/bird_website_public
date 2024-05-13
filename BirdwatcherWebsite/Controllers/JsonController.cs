@@ -10,6 +10,7 @@ namespace BirdwatcherWebsite.Controllers
         [HttpPost]
         public IActionResult PostJson([FromBody] JObject jsonInput)
         {
+            string file;
             try
             {
                 // Log the received JSON data to the console
@@ -20,7 +21,7 @@ namespace BirdwatcherWebsite.Controllers
                 // Extract image data from JSON object
                 string base64Image = jsonInput["image"].ToString();
                 byte[] imageBytes = Convert.FromBase64String(base64Image);
-                StoreImage(imageBytes);
+                file = StoreImage(imageBytes);
             }
             catch (Exception ex)
             {
@@ -28,10 +29,10 @@ namespace BirdwatcherWebsite.Controllers
                 return BadRequest("Error processing image");
             }
 
-            return Ok("Image processed and stored successfully.");
+            return Ok("Image processed and stored successfully name is " + file);
         }
 
-        private void StoreImage(byte[] imageBytes)
+        private string StoreImage(byte[] imageBytes)
         {
             string fileName = GenerateUniqueFileName("jpg");
             string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Photos", fileName);
@@ -46,6 +47,8 @@ namespace BirdwatcherWebsite.Controllers
             // Write the image bytes to the file
             System.IO.File.WriteAllBytes(filePath, imageBytes);
             Console.WriteLine($"Image saved to {filePath}");
+
+            return filePath;
         }
 
         private string GenerateUniqueFileName(string fileExtension)
