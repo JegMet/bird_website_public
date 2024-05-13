@@ -17,11 +17,11 @@ namespace BirdwatcherWebsite.Controllers
 
             // 
 
-           // System.Diagnostics.Debug.WriteLine(jsonString);
+            // System.Diagnostics.Debug.WriteLine(jsonString);
 
 
             // Optionally, return the JSON object back as a response
-            return Ok(jsonInput);
+            return Ok("Image processed and stored successfully.");
         }
     }
 }
