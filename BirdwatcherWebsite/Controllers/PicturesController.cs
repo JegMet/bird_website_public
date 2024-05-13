@@ -111,7 +111,7 @@ namespace BirdwatcherWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,DateTimeImgTaken,BirdType,ImagePath")] Picture picture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,DateTimeImgTaken,BirdType,ImagePath,Description")] Picture picture)
         {
             if (id != picture.Id)
             {
