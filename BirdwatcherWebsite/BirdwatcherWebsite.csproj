@@ -7,6 +7,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\Photos\04d5f900-c814-4723-9bfc-48ea242a847c.jpg" />
+    <Content Remove="wwwroot\Photos\0fc2977b-83dc-4b47-83c0-a6ed1bdf3b3b.jpg" />
+    <Content Remove="wwwroot\Photos\13c71c90-fab3-472e-92dc-9826cc4ecc4b.jpg" />
+    <Content Remove="wwwroot\Photos\1e65443e-685d-42bd-b8ab-745de02753a6.jpg" />
+    <Content Remove="wwwroot\Photos\1f30a7e1-953b-4c47-8de7-484a7c4f8503.jpg" />
+    <Content Remove="wwwroot\Photos\2024-04-25-01-42-08-download.jpg" />
+    <Content Remove="wwwroot\Photos\2024-04-25-02-13-13-indexVer.png" />
+    <Content Remove="wwwroot\Photos\2024-05-07-09-52-25-pngtree-man-in-shirt-smiles-and-gives-thumbs-up-to-show-approval-png-image_10094381.png" />
+    <Content Remove="wwwroot\Photos\429cd602-491a-4496-b938-f3cba39a688d.jpg" />
+    <Content Remove="wwwroot\Photos\55693121-b780-46af-87c9-efb8b729a4c0.jpg" />
+    <Content Remove="wwwroot\Photos\5c2f38a5-77aa-47b3-b4a5-20bd877023c4.jpeg" />
+    <Content Remove="wwwroot\Photos\713647f2-3d98-4e19-b034-193a55751959.jpg" />
+    <Content Remove="wwwroot\Photos\7c717bcd-c69c-4935-8688-62b9ce5df56a.jpg" />
+    <Content Remove="wwwroot\Photos\8c8f6bea-2358-4756-b80d-fc433a487c59.jpg" />
+    <Content Remove="wwwroot\Photos\b2ad4d69-a8b5-4884-8305-998c3b409d0d.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">

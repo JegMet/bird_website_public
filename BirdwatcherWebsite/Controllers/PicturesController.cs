@@ -111,7 +111,7 @@ namespace BirdwatcherWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,DateTimeImgTaken,BirdType")] Picture picture)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,DateTimeImgTaken,BirdType,ImagePath")] Picture picture)
         {
             if (id != picture.Id)
             {
@@ -167,8 +167,28 @@ namespace BirdwatcherWebsite.Controllers
             var picture = await _context.Picture.FindAsync(id);
             if (picture != null)
             {
+                // Try to delete the picture file from the filesystem
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Photos", Path.GetFileName(picture.ImagePath));
+                if (System.IO.File.Exists(filePath))
+                {
+                    try
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Log the error or handle it accordingly
+                        // Consider whether to notify the user or handle silently
+                        Console.WriteLine("An error occurred while attempting to delete the file: " + ex.Message);
+                    }
+                }
+
+
                 _context.Picture.Remove(picture);
             }
+
+            // delete picture from wwwroot/Photos
+
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

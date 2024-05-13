@@ -38,16 +38,20 @@ namespace BirdwatcherWebsite.Controllers
                 var picture = new Picture
                 {
                     ImagePath = filePath,
-                    Title = "Optional Title", // Add a way to include title if your JSON includes it
                     DateTimeImgTaken = DateTime.Now, // Consider extracting from JSON if available
-                    BirdType = "Optional Bird Type" // Add a way to include bird type if your JSON includes it
+                    BirdType = "Unknown" // Add a way to include bird type if your JSON includes it
                 };
 
                 // Save the Picture entity to the database
                 _context.Add(picture);
                 await _context.SaveChangesAsync();
 
-                return Ok("Image processed and stored successfully, name is " + filePath);
+                // Build the absolute URL to the stored image
+                var request = HttpContext.Request;
+                var baseUrl = $"{request.Scheme}://{request.Host}";
+                var imageUrl = $"{baseUrl}/Photos/{filePath}";
+
+                return Ok(new { Message = "Image processed and stored successfully", ImageUrl = imageUrl });
             }
             catch (Exception ex)
             {
